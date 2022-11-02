@@ -1,29 +1,26 @@
 
 # PaymentAPI
 
-API de Pagamento integrada com a PagSeguro
+## _API de Pagamento Integrada com a PagSeguro_
 
 ### Antes de começar
 
-Antes de começar, você precisa ter uma conta do tipo Vendedor ou Empresarial na PagSeguro. Você pode criar uma nova conta através do link abaixo:
+Antes de começar, você precisa ter uma conta do tipo Vendedor ou Empresarial na PagSeguro.
+Após criação da conta você precisará anotar EMAIL, TOKEN e APPLICATION_NAME no
+arquivo ENV deste projeto. Instruções de como fazer isso e documentações podem ser encontradas nos links abaixo.
 
-[Criar Conta](https://cadastro.pagseguro.uol.com.br/).
+Realização obrigatória:
+[Criar Conta](https://cadastro.pagseguro.uol.com.br/)
+[Obter Token](https://dev.pagseguro.uol.com.br/reference/get-access-token)
+[Abrir Docs](https://dev.pagseguro.uol.com.br/docs)
 
-Após criação da conta você precisará anotar EMAIL, TOKEN e APPLICATION NAME no
-arquivo ENV deste projeto.
-
-### Documentação PagSeguro
-
-Existem dois tipos de documentação disponíveis no site do PagSeguro:
-[Docs](https://dev.pagseguro.uol.com.br/docs)
+Consulta futura:
 [API Reference](https://dev.pagseguro.uol.com.br/reference)
-
-Esta aplicação faz uso da API de Recorrencia do PagSeguro e sua documentação encontra-se em:
 [API Recorrencia](https://dev.pagseguro.uol.com.br/v1.0/reference/api-recorrencia)
 
 # MongoDB
 Para utilizar essa aplicação você precisa de um docker container rodando
-MongoDB vLTS na porta 27017. Use o comando abaixo e substitua a palavra "example"
+a imagem mongo na porta 27017. Use o comando abaixo e substitua a palavra "example"
 por credenciais de sua preferencia. Não esqueça de anotar esta informação em seu
 arquivo ENV.
 
