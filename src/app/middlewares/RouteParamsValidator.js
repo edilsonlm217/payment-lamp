@@ -1,9 +1,7 @@
 import { object, string, number } from 'yup';
 
 export default async function RouteParamValidator(req, res, next) {
-    const url = req.url;
-
-    if (url === '/plans') {
+    if (req.url === '/plans') {
         try {
             await CreatePlanParams.validate(req.body, { strict: true });
             next();
