@@ -1,9 +1,12 @@
 import { Router } from 'express';
+import PlanController from './app/controllers/PlanController';
 
-import SubscriptionController from './app/controllers/SubscriptionController'
+import RouteParamValidator from './app/middlewares/RouteParamsValidator';
 
 const routes = new Router();
 
-routes.post('/subscription', SubscriptionController.store);
+routes.use(RouteParamValidator);
+routes.post('/plans', PlanController.store)
+
 
 export default routes;
