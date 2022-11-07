@@ -1,8 +1,6 @@
 import axios from "axios";
 import convert from 'xml-js';
 
-import Plan from "../schemas/Plan";
-
 class SessionController {
     async store(_req, res) {
         const { PAGSEGURO_EMAIL, PAGSEGURO_TOKEN } = process.env;
