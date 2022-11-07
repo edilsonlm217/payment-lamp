@@ -6,8 +6,8 @@ import RouteParamValidator from './app/middlewares/RouteParamsValidator';
 const routes = new Router();
 
 routes.use(RouteParamValidator);
-routes.post('/plans', PlanController.store)
 routes.get('/plans', PlanController.index)
+routes.post('/plans', PlanController.store)
 
 
 export default routes;
