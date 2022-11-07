@@ -7,6 +7,7 @@ const routes = new Router();
 
 routes.use(RouteParamValidator);
 routes.post('/plans', PlanController.store)
+routes.get('/plans', PlanController.index)
 
 
 export default routes;
