@@ -1,7 +1,7 @@
 import { object, string, number } from 'yup';
 
-export default async function   (req, res, next) {
-    if (req.url === '/plans') {
+export default async function (req, res, next) {
+    if (req.url === '/plans' && req.method === 'POST') {
         try {
             await CreatePlanParams.validate(req.body, { strict: true });
             next();
@@ -13,6 +13,10 @@ export default async function   (req, res, next) {
                 status: 400,
             });
         }
+    }
+
+    if (req.url === '/plans' && req.method === 'GET') {
+        next();
     }
 }
 
