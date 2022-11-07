@@ -4,6 +4,11 @@ import convert from 'xml-js';
 import Plan from "../schemas/Plan";
 
 class PlanController {
+    async index(req, res) {
+        const plans = await Plan.find({});
+        return res.json(plans)
+    }
+
     async store(req, res) {
         const { name, period, amountPerPayment, maxUses, description } = req.body;
 
