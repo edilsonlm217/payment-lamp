@@ -5,13 +5,14 @@ import Plan from "../schemas/Plan";
 
 class PlanController {
     async store(req, res) {
-        const { name, period, amountPerPayment, maxUses } = req.body;
+        const { name, period, amountPerPayment, maxUses, description } = req.body;
 
         const plan = await Plan.create({
             name,
             period,
             amountPerPayment,
-            maxUses
+            maxUses,
+            description
         });
 
         const options = {
