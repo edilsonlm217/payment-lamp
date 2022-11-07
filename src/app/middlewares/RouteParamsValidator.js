@@ -15,9 +15,7 @@ export default async function (req, res, next) {
         }
     }
 
-    if (req.url === '/plans' && req.method === 'GET') {
-        next();
-    }
+    next();
 }
 
 const CreatePlanParams = object({
