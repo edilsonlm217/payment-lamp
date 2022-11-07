@@ -21,6 +21,11 @@ const PlanSchema = new mongoose.Schema(
         maxUses: {
             type: Number,
             required: true,
+        },
+        currentUses: {
+            type: Number,
+            required: false,
+            default: 0
         }
     },
     {
