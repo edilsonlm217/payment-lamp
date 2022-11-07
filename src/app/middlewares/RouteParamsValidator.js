@@ -1,6 +1,6 @@
 import { object, string, number } from 'yup';
 
-export default async function RouteParamValidator(req, res, next) {
+export default async function   (req, res, next) {
     if (req.url === '/plans') {
         try {
             await CreatePlanParams.validate(req.body, { strict: true });
@@ -23,5 +23,6 @@ const CreatePlanParams = object({
         'is-decimal',
         'Invalid decimal on amountPerPayment',
         value => (value + "").match(/^\d*\.{1}\d*$/)),
-    maxUses: number().required().positive()
+    maxUses: number().required().positive(),
+    description: string().required(),
 });
