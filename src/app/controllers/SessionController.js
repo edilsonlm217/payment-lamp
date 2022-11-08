@@ -35,13 +35,13 @@ class SessionController {
                     });
                     break;
             }
-        }
 
-        return res.status(500).json({
-            title: "Internal Server Error",
-            detail: "The request made by the Server to PagSeguro is missing some required info or is timed-out",
-            status: 500,
-        });
+            return res.status(500).json({
+                title: "Internal Server Error",
+                detail: "The request made by the Server to PagSeguro is missing some required info or is timed-out",
+                status: 500,
+            });
+        }
     }
 }
 
