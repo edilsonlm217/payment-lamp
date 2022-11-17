@@ -1,8 +1,9 @@
 import { Router } from 'express';
 
-import CardTokenController from './app/controllers/CardTokenController';
 import PlanController from './app/controllers/PlanController';
 import SessionController from './app/controllers/SessionController';
+import CardTokenController from './app/controllers/CardTokenController';
+import SubscriptionController from './app/controllers/SubscriptionController';
 
 import RouteParamValidator from './app/middlewares/RouteParamsValidator';
 
@@ -15,7 +16,9 @@ routes.post('/plans', PlanController.store);
 
 routes.post('/session', SessionController.store);
 
-routes.post('/generate-token', CardTokenController.store)
+routes.post('/generate-token', CardTokenController.store);
+
+routes.post('/subscription', SubscriptionController.store);
 
 
 export default routes;
