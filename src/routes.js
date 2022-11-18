@@ -9,16 +9,14 @@ import RouteParamValidator from './app/middlewares/RouteParamsValidator';
 
 const routes = new Router();
 
-routes.use(RouteParamValidator);
-
 routes.get('/plans', PlanController.index);
-routes.post('/plans', PlanController.store);
+routes.post('/plans', RouteParamValidator, PlanController.store);
 
 routes.post('/session', SessionController.store);
 
-routes.post('/generate-token', CardTokenController.store);
+routes.post('/generate-token', RouteParamValidator, CardTokenController.store);
 
-routes.post('/subscription', SubscriptionController.store);
+routes.post('/subscription', RouteParamValidator, SubscriptionController.store);
 
 
 export default routes;
