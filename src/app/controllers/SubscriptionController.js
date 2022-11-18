@@ -1,69 +1,25 @@
-import axios from "axios";
-
+import { AderirPlanoPagSeguro } from "../pagseguro/procedures";
+import Plan from '../schemas/Plan';
 class SubscriptionController {
     async store(req, res) {
-        const { plan } = req.body.order;
-        const { name, email, hash, phone_number, address, documents } = req.body.from;
-        const [areaCode, number] = [phone_number.slice(0, 2), phone_number.slice(2)];
-        const { type, creditCard } = req.body.payment_data;
-        const { holder } = creditCard;
-        const [holderAreaCode, holderNumber] = [holder.phone_number.slice(0, 2), holder.phone_number.slice(2)];
+        const { plan: planCode } = req.body.order;
+        const plan = await Plan.findOne({ planCode: planCode });
 
-        const options = {
-            method: 'POST',
-            url: `${process.env.PAGSEGURO_API}/pre-approvals`,
-            params: { email: process.env.PAGSEGURO_EMAIL, token: process.env.PAGSEGURO_TOKEN },
-            headers: {
-                Accept: 'application/vnd.pagseguro.com.br.v1+json;charset=ISO-8859-1',
-                'Content-Type': 'application/json'
-            },
-            data: {
-                plan: plan,
-                reference: 'TESTE',
-                sender: {
-                    name: name,
-                    email: email,
-                    hash: hash,
-                    phone: { areaCode: areaCode, number: number },
-                    address: {
-                        street: address.street,
-                        number: address.number,
-                        complement: address.complement,
-                        district: address.district,
-                        city: address.city,
-                        state: address.state,
-                        country: address.country,
-                        postalCode: address.postalCode.replace(/\D/g, '')
-                    },
-                    documents: [documents]
-                },
-                paymentMethod: {
-                    type: type,
-                    creditCard: {
-                        token: creditCard.token,
-                        holder: {
-                            name: holder.name,
-                            birthDate: holder.birthDate,
-                            documents: [holder.documents],
-                            phone: { areaCode: holderAreaCode, number: holderNumber },
-                            billingAddress: {
-                                street: holder.billingAddress.street,
-                                number: holder.billingAddress.number,
-                                complement: holder.billingAddress.complement,
-                                district: holder.billingAddress.district,
-                                city: holder.billingAddress.city,
-                                state: holder.billingAddress.state,
-                                country: holder.billingAddress.country,
-                                postalCode: holder.billingAddress.postalCode.replace(/\D/g, '')
-                            }
-                        }
-                    }
-                }
-            }
-        };
+        const planExists = plan === null ? false : true;
+        const isPlanAbleToGetSubscriptions = plan?.currentUses < plan?.maxUses;
+
+        if (!planExists || !isPlanAbleToGetSubscriptions) {
+            return res.status(400).json({
+                title: "Bad Request",
+                detail: "Plan does not exist or has reached maxUses",
+                status: 400,
+            });
+        }
 
         try {
-            const response = await axios(options);
+            const response = await AderirPlanoPagSeguro(req.body);
+            plan.currentUses = plan.currentUses + 1;
+            await plan.save();
             return res.json(response.data);
         } catch (error) {
             const { status } = error.response;
@@ -72,7 +28,7 @@ class SubscriptionController {
                     console.error({
                         title: "Bad Request",
                         detail: "The request is propably missing either email or token",
-                        status: 401,
+                        status: 400,
                     });
                     break;
 
